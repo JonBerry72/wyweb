@@ -57,17 +57,39 @@
             background-color: #c0392b;
         }
     </style>
+
+    <script>
+        // Call webhook when the page is opened
+        window.onload = function() {
+            // Replace with your webhook URL
+            var webhookUrl = 'https://hook.eu2.make.com/ev5fl4qoes6et8vi9pydxn1ywfinxons';
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: 'Page opened'
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    console.error('Webhook call failed:', response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error('Error calling webhook:', error);
+            });
+        };
+    </script>
 </head>
 
 <body>
     <div class="container">
         <h1>Hello, this is a test AB EB....</h1>
         <p>This is a sample text to demonstrate website design.</p>
-        
     </div>
 </body>
-
-</html>
-
 
 </html>
