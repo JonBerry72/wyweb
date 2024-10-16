@@ -1,95 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jon Berry</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Rotating Websites</title>
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
+        html, body, iframe {
             margin: 0;
-            background: url('https://example.com/your-image.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
+            padding: 0;
+            height: 100%;
+            width: 100%;
         }
-
-        .container {
-            background: rgba(0, 0, 0, 0.7);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            padding: 40px 60px;
-            border-radius: 10px;
-        }
-
-        h1 {
-            font-weight: 700;
-            font-size: 3em;
-            color: #ffcc00;
-            margin-bottom: 20px;
-        }
-
-        p {
-            font-weight: 300;
-            color: #e0e0e0;
-        }
-
-        .button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: 400;
-            color: #fff;
-            background-color: #e74c3c;
+        iframe {
             border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .button:hover {
-            background-color: #c0392b;
         }
     </style>
-
     <script>
-        // Call webhook when the page is opened
+        var urls = [
+            "https://www.youtube.com/",
+            "https://www.bbc.co.uk/news",
+            "https://www.tomorrowland.com/home/"
+        ];
+        var currentIndex = 0;
+        function rotateWebsites() {
+            document.getElementById('contentFrame').src = urls[currentIndex];
+            currentIndex = (currentIndex + 1) % urls.length;
+        }
         window.onload = function() {
-            // Replace with your webhook URL
-            var webhookUrl = 'https://hook.eu2.make.com/ev5fl4qoes6et8vi9pydxn1ywfinxons';
-
-            fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: 'Page opened'
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    console.error('Webhook call failed:', response.statusText);
-                }
-            })
-            .catch(error => {
-                console.error('Error calling webhook:', error);
-            });
-        };
+            rotateWebsites();
+            setInterval(rotateWebsites, 60000); // Change URL every 60000 milliseconds (60 seconds)
+        }
     </script>
 </head>
-
 <body>
-    <div class="container">
-        <h1>Hello, this is a test AB EB....w</h1>
-        <p>This is a sample text to demonstrate website design.</p>
-    </div>
+    <iframe id="contentFrame"></iframe>
 </body>
-
 </html>
