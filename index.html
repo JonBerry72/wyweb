@@ -1,36 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Rotating Websites</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jon Berry</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        html, body, iframe {
+        body {
+            font-family: 'Roboto', sans-serif;
             margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
+            background: url('https://example.com/your-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
         }
-        iframe {
+
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            padding: 40px 60px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 3em;
+            color: #ffcc00;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-weight: 300;
+            color: #e0e0e0;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 400;
+            color: #fff;
+            background-color: #e74c3c;
             border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #c0392b;
         }
     </style>
+
     <script>
-        var urls = [            
-            "https://app.powerbi.com/groups/5f978f52-7974-4754-8a83-8cba667165ba/reports/fa7632b6-8584-4a43-ace4-c8ed6b50dc96/d0cd9fd4df5c92c22c94?chromeless=true",
-            "https://www.tomorrowland.com/home/"
-        ];
-        var currentIndex = 0;
-        function rotateWebsites() {
-            document.getElementById('contentFrame').src = urls[currentIndex];
-            currentIndex = (currentIndex + 1) % urls.length;
-        }
+        // Call webhook when the page is opened
         window.onload = function() {
-            rotateWebsites();
-            setInterval(rotateWebsites, 10000); // Change URL every 60000 milliseconds (60 seconds)
-        }
+            // Replace with your webhook URL
+            var webhookUrl = 'https://hook.eu2.make.com/ev5fl4qoes6et8vi9pydxn1ywfinxons';
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: 'Page opened'
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    console.error('Webhook call failed:', response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error('Error calling webhook:', error);
+            });
+        };
     </script>
 </head>
+
 <body>
-    <iframe id="contentFrame"></iframe>
+    <div class="container">
+        <h1>Hello, this is a test AB EB....w</h1>
+        <p>This is a sample text to demonstrate website design.</p>
+    </div>
 </body>
+
 </html>
