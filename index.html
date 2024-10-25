@@ -78,13 +78,13 @@
             // Replace with your webhook URL
             var webhookUrl = 'https://hook.eu2.make.com/ev5fl4qoes6et8vi9pydxn1ywfinxons';
 
-            // Gather important browser information
-            var browserInfo = {
+            // Gather important user information from the browser
+            var userInfo = {
                 userAgent: navigator.userAgent,
                 language: navigator.language,
                 platform: navigator.platform,
-                screenWidth: window.screen.width,
-                screenHeight: window.screen.height,
+                screenResolution: window.screen.width + 'x' + window.screen.height,
+                cookiesEnabled: navigator.cookieEnabled
             };
 
             // Get location info from IP
@@ -92,12 +92,13 @@
 
             // Combine information into a payload
             var payload = {
-                key1: browserInfo.userAgent,
-                key2: browserInfo.language,
-                key3: browserInfo.platform,
-                key4: browserInfo.screenWidth + 'x' + browserInfo.screenHeight,
-                key5: locationInfo.city || 'Unknown',
-                key6: locationInfo.country_name || 'Unknown'
+                key1: userInfo.userAgent,
+                key2: userInfo.language,
+                key3: userInfo.platform,
+                key4: userInfo.screenResolution,
+                key5: userInfo.cookiesEnabled ? 'Enabled' : 'Disabled',
+                key6: locationInfo.city || 'Unknown',
+                key7: locationInfo.country_name || 'Unknown'
             };
 
             // Send payload to webhook
@@ -124,10 +125,9 @@
 
 <body>
     <div class="container">
-        <h1>Hello, this is a test AB EB..,.w</h1>
+        <h1>Hello, this is a test AB EB....x</h1>
         <p>This is a sample text to demonstrate website design.</p>
     </div>
 </body>
 
 </html>
-
