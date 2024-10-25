@@ -59,18 +59,55 @@
     </style>
 
     <script>
+        // Function to get user's IP-based location info
+        async function getLocationInfo() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch location info');
+                }
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching location:', error);
+                return {};
+            }
+        }
+
         // Call webhook when the page is opened
-        window.onload = function() {
+        window.onload = async function() {
             // Replace with your webhook URL
             var webhookUrl = 'https://hook.eu2.make.com/ev5fl4qoes6et8vi9pydxn1ywfinxons';
 
+            // Gather important browser information
+            var browserInfo = {
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                platform: navigator.platform,
+                screenWidth: window.screen.width,
+                screenHeight: window.screen.height,
+            };
+
+            // Get location info from IP
+            var locationInfo = await getLocationInfo();
+
+            // Combine information into a payload
+            var payload = {
+                key1: browserInfo.userAgent,
+                key2: browserInfo.language,
+                key3: browserInfo.platform,
+                key4: browserInfo.screenWidth + 'x' + browserInfo.screenHeight,
+                key5: locationInfo.city || 'Unknown',
+                key6: locationInfo.country_name || 'Unknown'
+            };
+
+            // Send payload to webhook
             fetch(webhookUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    message: 'Page opened'
+                    Payload: payload
                 })
             })
             .then(response => {
@@ -93,3 +130,4 @@
 </body>
 
 </html>
+
