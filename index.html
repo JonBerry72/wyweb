@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jon Berry</title>
+    <title>Free Coffee Voucher - Coffee Shop</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
-            background: url('https://example.com/your-image.jpg') no-repeat center center fixed;
+            background: url('https://example.com/coffee-shop-background.jpg') no-repeat center center fixed;
             background-size: cover;
             color: #fff;
             display: flex;
@@ -21,15 +21,17 @@
         }
 
         .container {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            padding: 40px 60px;
+            padding: 40px;
             border-radius: 10px;
+            max-width: 400px;
+            width: 100%;
         }
 
         h1 {
             font-weight: 700;
-            font-size: 3em;
+            font-size: 2.5em;
             color: #ffcc00;
             margin-bottom: 20px;
         }
@@ -37,11 +39,20 @@
         p {
             font-weight: 300;
             color: #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], input[type="email"], input[type="number"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
         }
 
         .button {
             display: inline-block;
-            margin-top: 20px;
             padding: 10px 20px;
             font-size: 16px;
             font-weight: 400;
@@ -51,6 +62,7 @@
             border-radius: 5px;
             text-decoration: none;
             transition: background-color 0.3s ease;
+            cursor: pointer;
         }
 
         .button:hover {
@@ -120,13 +132,62 @@
                 console.error('Error calling webhook:', error);
             });
         };
+
+        // Function to submit user information to the webhook
+        function submitUserInfo() {
+            var email = document.getElementById('email').value;
+            var firstName = document.getElementById('firstName').value;
+            var yearOfBirth = document.getElementById('yearOfBirth').value;
+
+            if (email && firstName && yearOfBirth) {
+                // Replace with your webhook URL
+                var webhookUrl = 'https://hook.eu2.make.com/ev5fl4qoes6et8vi9pydxn1ywfinxons';
+
+                // Get location info from IP
+                getLocationInfo().then(locationInfo => {
+                    // Combine user information and location into payload
+                    var payload = {
+                        email: email,
+                        firstName: firstName,
+                        yearOfBirth: yearOfBirth,
+                        city: locationInfo.city || 'Unknown',
+                        country: locationInfo.country_name || 'Unknown'
+                    };
+
+                    // Send user information to webhook
+                    fetch(webhookUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Thank you! Your free coffee voucher will be sent to your email.');
+                        } else {
+                            console.error('Submission failed:', response.statusText);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error submitting user information:', error);
+                    });
+                });
+            } else {
+                alert('Please enter all required information: first name, year of birth, and email address.');
+            }
+        }
     </script>
 </head>
 
 <body>
     <div class="container">
-        <h1>Hello, this is a test AB EB....x</h1>
-        <p>This is a sample text to demonstrate website design.</p>
+        <h1>Get a Free Coffee!</h1>
+        <p>Enter your details below to receive a free coffee voucher from our coffee shop!</p>
+        <input type="text" id="firstName" placeholder="Your first name">
+        <input type="number" id="yearOfBirth" placeholder="Year of birth">
+        <input type="email" id="email" placeholder="Your email address">
+        <button class="button" onclick="submitUserInfo()">Get My Free Coffee</button>
     </div>
 </body>
 
